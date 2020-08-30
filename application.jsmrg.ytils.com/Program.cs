@@ -6,7 +6,7 @@ namespace application.jsmrg.ytils.com
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

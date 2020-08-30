@@ -1,4 +1,6 @@
 /application.jsmrg.ytils.com/bin/
 /application.jsmrg.ytils.com/obj/
+/test.jsmrg.ytils.com/bin/
+/test.jsmrg.ytils.com/obj/
 .idea
 .DS_Store
