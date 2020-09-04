@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace test.jsmrg.ytils.com
 {
-    public class Tests
+    public class ProgramRunnerTest
     {
         [SetUp]
         public void Setup()
