@@ -8,6 +8,7 @@ namespace application.jsmrg.ytils.com
         static void Main(string[] args)
         {
             var programRunner = new ProgramRunner(args);
+            
 
             if (!programRunner.IoCheck(out var terminalMessages))
             {

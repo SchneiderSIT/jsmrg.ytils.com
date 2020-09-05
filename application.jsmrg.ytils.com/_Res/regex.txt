@@ -1,0 +1,4 @@
+var blockComments = @"/\*(.*?)\*/";
+var lineComments = @"//(.*?)\r?\n";
+var strings = @"""((\\[^\n]|[^""\n])*)""";
+var verbatimStrings = @"@(""[^""]*"")+";

@@ -1,0 +1,6 @@
+/**jsmrg include what.js */
+///jsmrg include what.js */
+/**jsmrg htmlvar what.html ""saveBtn ""some ""matter */
+///jsmrg htmlvar what.html ""saveBtn ""some ""matter */
+
+<div id="{{what}}">{{foo}}</div>
