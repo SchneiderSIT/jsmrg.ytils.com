@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.IO;
 using application.jsmrg.ytils.com.Lib.Terminal;
 
@@ -22,10 +23,10 @@ namespace application.jsmrg.ytils.com.lib
         public bool IoCheck(out List<TerminalMessage> messages)
         {
             var ioCheck = new IoCheck();
-            var ioCheckResult = ioCheck.CheckRunArgs(Args);
+            var ioCheckResult = ioCheck.Run(Args);
             
             messages = new List<TerminalMessage>();
-            if (false == ioCheckResult.IsOk)
+            if (ioCheckResult.CheckResult == CheckResult.Error)
             {
                 messages = ioCheckResult.Messages;
                 

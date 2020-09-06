@@ -23,5 +23,18 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 
             return output.ToString();
         }
+        
+        /// <summary>
+        /// This method outputs a single TerminalMessage to the console with the given
+        /// colors using Colorful.Console NuGet package. The appended string lines will
+        /// be returned as well but with no color information. 
+        /// </summary>
+        public static string WriteTerminalMessage(TerminalMessage message)
+        {
+            List<TerminalMessage> terminalMessages = new List<TerminalMessage>();
+            terminalMessages.Add(message);
+
+            return WriteTerminalMessages(terminalMessages);
+        }
     }
 }
