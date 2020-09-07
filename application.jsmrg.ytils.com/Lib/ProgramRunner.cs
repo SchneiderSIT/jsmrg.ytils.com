@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.IO;
 using application.jsmrg.ytils.com.Lib.Terminal;
+using application.jsmrg.ytils.com.Lib.Terminal.Help;
 
 namespace application.jsmrg.ytils.com.lib
 {
@@ -16,11 +15,40 @@ namespace application.jsmrg.ytils.com.lib
         {
             Args = args;
         }
+        
+        /// <summary>
+        /// Runs JsMrg. 
+        /// </summary>
+        public ProgramRunnerExit Run()
+        {
+            // if (CheckResult.Apply == )
+            
+            if (CheckResult.Ok != IoCheck(out var terminalMessages))
+            {
+                TerminalWriter.WriteTerminalMessages(terminalMessages);
+                
+                // Bail out, we are not ready to run. 
+                return ProgramRunnerExit.IoCheckOut;
+            }
+
+            return ProgramRunnerExit.Done;
+        }
+
+        private CheckResult HelpCheck(out List<TerminalMessage> messages)
+        {
+            var helpCheck = new HelpCheck();
+            var helpCheckResult = helpCheck.Run(Args);
+
+            messages = new List<TerminalMessage>();
+            
+            // TODO
+            return CheckResult.Ignore;
+        }
 
         /// <summary>
         /// Runs the IoCheck.
         /// </summary>
-        public bool IoCheck(out List<TerminalMessage> messages)
+        private CheckResult IoCheck(out List<TerminalMessage> messages)
         {
             var ioCheck = new IoCheck();
             var ioCheckResult = ioCheck.Run(Args);
@@ -30,15 +58,10 @@ namespace application.jsmrg.ytils.com.lib
             {
                 messages = ioCheckResult.Messages;
                 
-                return false;
+                return CheckResult.Error;
             }
 
-            return true;
-        }
-        
-        private void Run()
-        {
-            
+            return CheckResult.Ok;
         }
     }
 }

@@ -6,7 +6,6 @@ namespace application.jsmrg.ytils.com.Lib.Terminal.Help
     {
         public Check Run(string[] args)
         {
-            var tArgs = args;
             var result = Check.Create();
             
             result.CheckResult = CheckResult.Ignore;
