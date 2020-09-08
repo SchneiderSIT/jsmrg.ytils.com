@@ -51,6 +51,7 @@ namespace application.jsmrg.ytils.com.Lib.Common
             return CheckResult.Error;
         }
 
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private static void ExpectOkOrError(Check result)
         {
             if (!(result.CheckResult == CheckResult.Ok || result.CheckResult == CheckResult.Error))

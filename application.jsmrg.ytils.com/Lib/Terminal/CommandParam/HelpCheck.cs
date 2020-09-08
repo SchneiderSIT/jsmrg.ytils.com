@@ -1,6 +1,6 @@
 using application.jsmrg.ytils.com.Lib.Common;
 
-namespace application.jsmrg.ytils.com.Lib.Terminal.Help
+namespace application.jsmrg.ytils.com.Lib.Terminal.CommandParam
 {
     public class HelpCheck : ICheck
     {
@@ -25,9 +25,7 @@ namespace application.jsmrg.ytils.com.Lib.Terminal.Help
         {
             arg = arg.ToLower();
 
-            return arg == "-help" ||
-                   arg == "--help" ||
-                   arg == "-?" ||
+            return arg == "--help" ||
                    arg == "--?";
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.IO;
 using application.jsmrg.ytils.com.Lib.Terminal;
-using application.jsmrg.ytils.com.Lib.Terminal.Help;
+using application.jsmrg.ytils.com.Lib.Terminal.CommandParam;
 
 namespace application.jsmrg.ytils.com.lib
 {
@@ -38,10 +38,16 @@ namespace application.jsmrg.ytils.com.lib
         {
             var helpCheck = new HelpCheck();
             var helpCheckResult = helpCheck.Run(Args);
-
-            messages = new List<TerminalMessage>();
             
-            // TODO
+            // Will be passed through empty if help is not applied.
+            messages = new List<TerminalMessage>();
+
+            if (helpCheckResult.CheckResult == CheckResult.Apply)
+            {
+                messages.Add(TerminalMessage.Create($"JsMrg, version {App.Version}"));
+                // messages.Add(TerminalMessage.Create($"usage"));
+            }
+
             return CheckResult.Ignore;
         }
 
