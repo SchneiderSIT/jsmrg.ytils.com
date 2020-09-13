@@ -1,9 +1,8 @@
 ﻿using application.jsmrg.ytils.com.lib;
-using application.jsmrg.ytils.com.Lib.Terminal;
 
 namespace application.jsmrg.ytils.com
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {

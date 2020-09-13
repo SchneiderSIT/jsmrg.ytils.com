@@ -24,7 +24,6 @@
         <LastGenOutput>HelpText.Designer.cs</LastGenOutput>
       </EmbeddedResource>
       <None Remove="ResHelp\HelpText.txt" />
-      <EmbeddedResource Include="ResHelp\HelpText.txt" />
     </ItemGroup>
 
 </Project>

@@ -47,6 +47,11 @@ namespace application.jsmrg.ytils.com.lib
             return ProgramRunnerExit.Done;
         }
 
+        /// <summary>
+        /// This method checks if help output is requested or required.
+        /// Help can be called explicitly or if a user uses JsMrg without
+        /// params. 
+        /// </summary>
         private CheckResult HelpCheck(out List<TerminalMessage> messages, bool force = false)
         {
             var helpCheck = new HelpCheck();
@@ -57,13 +62,30 @@ namespace application.jsmrg.ytils.com.lib
 
             if (force || helpCheckResult.CheckResult == CheckResult.Apply)
             {
-                messages.Add(TerminalMessage.Create($"JsMrg, version {App.Version}."));
-                messages.Add(TerminalMessage.Create(TerminalMessages.Help));
+                messages = AddInitialTerminalMessages(messages);
+                
+                foreach (var message in TerminalMessages.Help)
+                {
+                    messages.Add(TerminalMessage.Create(message));
+                }
 
                 return CheckResult.Apply;
             }
 
             return CheckResult.Ignore;
+        }
+
+        /// <summary>
+        /// This method adds initial standard messages to every run of JsMrg. 
+        /// </summary>
+        private List<TerminalMessage> AddInitialTerminalMessages(List<TerminalMessage> messages)
+        {
+            foreach (var message in TerminalMessages.InitialMessages)
+            {
+                messages.Add(TerminalMessage.Create(message));
+            }
+
+            return messages;
         }
 
         /// <summary>
