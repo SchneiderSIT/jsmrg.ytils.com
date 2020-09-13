@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.IO;
 using application.jsmrg.ytils.com.Lib.Common;
@@ -46,15 +47,34 @@ namespace application.jsmrg.ytils.com.lib.IO
             
             foreach (var file in files)
             {
-                using (var fileStream = new FileStream(file, FileMode.Open))
+                try
                 {
-                    if (false == fileStream.CanRead && fileStream.CanWrite)
+                    using (var fileStream = new FileStream(file, FileMode.Open))
                     {
-                        result.CheckResult = CheckResult.Error;
-                        result.Messages.Add(new TerminalMessage() { Color = Color.Red, Message = $"{file} is not accessible." });
+                        if (false == fileStream.CanRead && fileStream.CanWrite)
+                        {
+                            SetResultNotAccessible(result, file);
+                        }
                     }
                 }
+                catch (DirectoryNotFoundException)
+                {
+                    SetResultNotAccessible(result, file);
+                }
+                catch (Exception e)
+                {
+                    SetResultNotAccessible(result, file);
+                }
             }
+
+            return result;
+        }
+
+        private Check SetResultNotAccessible(Check result, string file)
+        {
+            result.CheckResult = CheckResult.Error;
+            result.Messages.Add(new TerminalMessage()
+                {Color = Color.Red, Message = $"{file} is not accessible."});
 
             return result;
         }

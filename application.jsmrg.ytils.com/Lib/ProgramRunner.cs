@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.IO;
@@ -9,7 +8,7 @@ namespace application.jsmrg.ytils.com.lib
 {
     public class ProgramRunner
     {
-        private string[] Args;
+        private readonly string[] Args;
     
         public ProgramRunner(string[] args)
         {
@@ -21,7 +20,21 @@ namespace application.jsmrg.ytils.com.lib
         /// </summary>
         public ProgramRunnerExit Run()
         {
-            // if (CheckResult.Apply == )
+            var helpCheck = false;
+            List<TerminalMessage> helpMessages = new List<TerminalMessage>();
+            
+            if (0 == Args.Length)
+            {
+                helpCheck = true;
+                HelpCheck(out helpMessages, true);
+            }
+
+            if (helpCheck || CheckResult.Apply == HelpCheck(out helpMessages))
+            {
+                TerminalWriter.WriteTerminalMessages(helpMessages);
+                
+                return ProgramRunnerExit.HelpOut;
+            }
             
             if (CheckResult.Ok != IoCheck(out var terminalMessages))
             {
@@ -34,7 +47,7 @@ namespace application.jsmrg.ytils.com.lib
             return ProgramRunnerExit.Done;
         }
 
-        private CheckResult HelpCheck(out List<TerminalMessage> messages)
+        private CheckResult HelpCheck(out List<TerminalMessage> messages, bool force = false)
         {
             var helpCheck = new HelpCheck();
             var helpCheckResult = helpCheck.Run(Args);
@@ -42,10 +55,12 @@ namespace application.jsmrg.ytils.com.lib
             // Will be passed through empty if help is not applied.
             messages = new List<TerminalMessage>();
 
-            if (helpCheckResult.CheckResult == CheckResult.Apply)
+            if (force || helpCheckResult.CheckResult == CheckResult.Apply)
             {
-                messages.Add(TerminalMessage.Create($"JsMrg, version {App.Version}"));
-                // messages.Add(TerminalMessage.Create($"usage"));
+                messages.Add(TerminalMessage.Create($"JsMrg, version {App.Version}."));
+                messages.Add(TerminalMessage.Create(TerminalMessages.Help));
+
+                return CheckResult.Apply;
             }
 
             return CheckResult.Ignore;

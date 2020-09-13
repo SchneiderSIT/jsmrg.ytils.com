@@ -9,4 +9,22 @@
       <PackageReference Include="Colorful.Console" Version="1.2.11" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="ResTest\NamespaceDeclarationInjectionTest\MainFile.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ResTest\NamespaceDeclarationInjectionTest\NamespaceDeclaration.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="ResHelp\HelpText.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>HelpText.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <None Remove="ResHelp\HelpText.txt" />
+      <EmbeddedResource Include="ResHelp\HelpText.txt" />
+    </ItemGroup>
+
 </Project>

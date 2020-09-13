@@ -13,7 +13,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="_Res" />
+      <None Update="TestRes\NamespaceInjectionTest\MainFile.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="TestRes\NamespaceInjectionTest\NamespaceDeclaration.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\application.jsmrg.ytils.com\application.jsmrg.ytils.com.csproj" />
     </ItemGroup>
 
 </Project>
