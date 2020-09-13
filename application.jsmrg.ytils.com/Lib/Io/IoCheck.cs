@@ -59,11 +59,11 @@ namespace application.jsmrg.ytils.com.lib.IO
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    SetResultNotAccessible(result, file);
+                    result = SetResultNotAccessible(result, file);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    SetResultNotAccessible(result, file);
+                    result = SetResultNotAccessible(result, file);
                 }
             }
 
@@ -73,8 +73,7 @@ namespace application.jsmrg.ytils.com.lib.IO
         private Check SetResultNotAccessible(Check result, string file)
         {
             result.CheckResult = CheckResult.Error;
-            result.Messages.Add(new TerminalMessage()
-                {Color = Color.Red, Message = $"{file} is not accessible."});
+            result.Messages.Add(new TerminalMessage() { Color = Color.Red, Message = $"{file} is not accessible." } );
 
             return result;
         }

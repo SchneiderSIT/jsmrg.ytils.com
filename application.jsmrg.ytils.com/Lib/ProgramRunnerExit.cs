@@ -4,6 +4,7 @@ namespace application.jsmrg.ytils.com.lib
     {
         Done,
         IoCheckOut,
-        HelpOut
+        Help,
+        Error
     }
 }

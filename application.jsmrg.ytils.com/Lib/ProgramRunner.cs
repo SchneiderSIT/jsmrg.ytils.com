@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using application.jsmrg.ytils.com.Lib.Common;
+using application.jsmrg.ytils.com.lib.Engine;
 using application.jsmrg.ytils.com.lib.IO;
 using application.jsmrg.ytils.com.Lib.Terminal;
 using application.jsmrg.ytils.com.Lib.Terminal.CommandParam;
@@ -33,7 +34,7 @@ namespace application.jsmrg.ytils.com.lib
             {
                 TerminalWriter.WriteTerminalMessages(helpMessages);
                 
-                return ProgramRunnerExit.HelpOut;
+                return ProgramRunnerExit.Help;
             }
             
             if (CheckResult.Ok != IoCheck(out var terminalMessages))
@@ -43,7 +44,26 @@ namespace application.jsmrg.ytils.com.lib
                 // Bail out, we are not ready to run. 
                 return ProgramRunnerExit.IoCheckOut;
             }
+            
+            var jsMrgRunner = new JsMrgRunner();
+            var combinedRunMessages = new List<TerminalMessage>();
+            
+            // Now we are ready to do the full run. 
+            foreach (var file in Args)
+            {
+                var runResult = jsMrgRunner.Run(file, out var runMessages);
+                combinedRunMessages.AddRange(runMessages);
 
+                if (false == runResult)
+                {
+                    TerminalWriter.WriteTerminalMessages(combinedRunMessages);
+                    
+                    return ProgramRunnerExit.Error;
+                }
+            }
+
+            TerminalWriter.WriteTerminalMessages(combinedRunMessages);
+            
             return ProgramRunnerExit.Done;
         }
 

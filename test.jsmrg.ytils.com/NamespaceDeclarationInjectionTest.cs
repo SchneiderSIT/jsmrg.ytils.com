@@ -13,10 +13,10 @@ namespace test.jsmrg.ytils.com
         [Test]
         public void TestNamespaceDeclarationInjection()
         {
-            var programRunner = new ProgramRunner(new [] { "ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
-            var what = programRunner.Run();
+            var programRunner = new ProgramRunner(new [] { "_ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
+            var result = programRunner.Run();
             
-            Assert.True(true);
+            Assert.AreEqual(ProgramRunnerExit.Done, result);
         }
     }
 }

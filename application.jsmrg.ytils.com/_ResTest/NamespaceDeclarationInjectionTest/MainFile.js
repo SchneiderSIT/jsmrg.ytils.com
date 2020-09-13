@@ -3,7 +3,7 @@
     "use strict";
     if (!window.YTILS) {
 
-
+        /**jsmrg include what.js */
 
         /**
          * This method verifies that jQuery is installed in a sufficient version.
