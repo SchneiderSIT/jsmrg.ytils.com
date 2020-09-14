@@ -4,6 +4,8 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 {
     public static class TerminalMessages
     {
+        public const string StoppingJsMrgRunner = @"Failed to apply {0}, file not existing or invalid command.";
+        
         public static readonly string[] InitialMessages = new string[]
         {
             "",
