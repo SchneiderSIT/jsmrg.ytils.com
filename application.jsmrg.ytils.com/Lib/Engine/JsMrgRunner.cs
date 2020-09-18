@@ -9,7 +9,9 @@ namespace application.jsmrg.ytils.com.lib.Engine
 {
     public class JsMrgRunner
     {
-        public const string CommandPrefix = "/**jsmrg";
+        public const string CommandPrefix = "/**jsmrg ";
+        public const string CommandIncludeInfix = "include";
+        public const string CommandHtmlVarInfix = "htmlVar";
         public const string CommandSuffix = "*/";
         
         public string ResultingFileContent { get; private set; }
