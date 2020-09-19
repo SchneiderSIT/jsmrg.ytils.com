@@ -1,6 +1,6 @@
 namespace application.jsmrg.ytils.com.lib.Engine
 {
-    public enum MatchInspectionResult
+    public enum MatchInspectionType
     {
         Include, 
         HtmlVar,

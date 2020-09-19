@@ -29,15 +29,15 @@ namespace application.jsmrg.ytils.com.lib.Engine
             foreach (Match match in matches)
             {
                 var inspection = matchOperator.Operate(match);
-                switch (inspection.Result)
+                switch (inspection.Type)
                 {
-                    case MatchInspectionResult.Include:
+                    case MatchInspectionType.Include:
                         file = Include(file, match.Value);
                         break;
-                    case MatchInspectionResult.HtmlVar:
+                    case MatchInspectionType.HtmlVar:
                         file = HtmlVar(file, match.Value);
                         break;
-                    case MatchInspectionResult.Error:
+                    case MatchInspectionType.Error:
                         messages.Add(TerminalMessage.Create(string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
                         break;
                 }

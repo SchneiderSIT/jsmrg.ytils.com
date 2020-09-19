@@ -1,7 +1,27 @@
+using System;
+
 namespace application.jsmrg.ytils.com.Lib.Common
 {
     public static class StrHelper
     {
+        private const string SingleWhiteSpace = " ";
+        
+        public static string GetTrimmedWhiteSpaceSplitIndex(string val, int index)
+        {
+            if (null != val)
+            {
+                var splits = val.Split(SingleWhiteSpace);
+                var ret = new string[splits.Length];
+
+                if (splits.Length >= index)
+                {
+                    return splits[index].Trim();
+                }
+            }
+
+            return string.Empty;
+        }
+        
         public static bool IsEncapsulatedBy(string val, string prefix, string suffix, out string extractedVal)
         {
             extractedVal = val;

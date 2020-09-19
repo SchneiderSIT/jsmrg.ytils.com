@@ -7,22 +7,36 @@ namespace application.jsmrg.ytils.com.lib.Engine
     {
         public MatchInspection Operate(Match match)
         {
-            var what = IdentifyMatch(match);
-            
-            return new MatchInspection();
-        }
-
-        private MatchInspectionResult IdentifyMatch(Match match)
-        {
             var matchingStr = match.Value.ToLower();
-            string nonEncapsulatedStr;
-            if (StrHelper.IsEncapsulatedBy(match.Value, JsMrgRunner.CommandPrefix, JsMrgRunner.CommandSuffix,
-                out nonEncapsulatedStr))
+            var matchInspection = MatchInspection.CreateEmpty(MatchInspectionType.Error);
+
+            if (StrHelper.IsEncapsulatedBy(matchingStr, JsMrgRunner.CommandPrefix, JsMrgRunner.CommandSuffix,
+                out var nonEncapsulatedStr))
             {
-                
+                matchInspection.Type = AnalyseMatch(nonEncapsulatedStr);
+                matchInspection.CommandText = nonEncapsulatedStr;
+
+                return matchInspection;
             }
             
-            return MatchInspectionResult.Include;
+            return matchInspection;
+        }
+
+        private MatchInspectionType AnalyseMatch(string nonEncapsulatedStr)
+        {
+            var possibleOperation = StrHelper.GetTrimmedWhiteSpaceSplitIndex(nonEncapsulatedStr, 0).ToLower();
+
+            if (possibleOperation == JsMrgCommand.Include)
+            {
+                return MatchInspectionType.Include;
+            }
+            
+            if (possibleOperation == JsMrgCommand.HtmlVar)
+            {
+                return MatchInspectionType.HtmlVar;
+            }
+
+            return MatchInspectionType.Error;
         }
     }
 }
