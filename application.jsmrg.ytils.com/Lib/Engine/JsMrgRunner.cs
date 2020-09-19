@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -14,50 +15,79 @@ namespace application.jsmrg.ytils.com.lib.Engine
         public const string CommandSuffix = "*/";
         
         public string ResultingFileContent { get; private set; }
+        public string OperatedFile { get; set; }
+        
+        public string OperationPath { get; set; }
 
         public bool Run(string file, out List<TerminalMessage> messages)
         {
             messages = new List<TerminalMessage>();
 
+            OperationPath = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar;
             ResultingFileContent = File.ReadAllText(file);
+            OperatedFile = file;
             var regex = new Regex(@"/\*\*(jsmrg)(?:(?!\*/).)*\*/", RegexOptions.Singleline);
             var matches = regex.Matches(ResultingFileContent);
             var error = false;
 
-            error = OperateMatches(messages, matches, file);
+            error = OperateMatches(messages, matches);
 
             return false == error;
         }
 
-        private bool OperateMatches(List<TerminalMessage> messages, MatchCollection matches, string file)
+        private bool OperateMatches(List<TerminalMessage> messages, MatchCollection matches)
         {
             var error = false;
             var matchOperator = new MatchOperator();
-            
-            foreach (Match match in matches)
+            var latestMatchValue = string.Empty;
+            var resultingFileContent = ResultingFileContent;
+
+            try
             {
-                var inspection = matchOperator.Operate(match);
-                switch (inspection.Command)
+                foreach (Match match in matches)
                 {
-                    case MatchInspectionType.Include:
-                        file = Include(inspection, ResultingFileContent);
-                        break;
-                    case MatchInspectionType.HtmlVar:
-                        file = HtmlVar(inspection, ResultingFileContent);
-                        break;
-                    case MatchInspectionType.Error:
-                        messages.Add(TerminalMessage.Create(string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
-                        error = true;
-                        break;
+                    var inspection = matchOperator.Operate(match);
+                    latestMatchValue = inspection.Match.Value;
+                    switch (inspection.Command)
+                    {
+                        case MatchInspectionType.Include:
+                            resultingFileContent = Include(inspection, resultingFileContent);
+                            break;
+                        case MatchInspectionType.HtmlVar:
+                            resultingFileContent = HtmlVar(inspection, resultingFileContent);
+                            break;
+                        case MatchInspectionType.Error:
+                            messages.Add(TerminalMessage.Create(
+                                string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
+                            error = true;
+                            break;
+                    }
                 }
             }
+            catch (JsMrgRunnerException jsMrgRunnerException)
+            {
+                messages.Add(TerminalMessage.Create(
+                    string.Format(TerminalMessages.StoppingJsMrgRunner, jsMrgRunnerException.Message), Color.Red));
+                error = true;
+            }
+            catch (Exception)
+            {
+                messages.Add(TerminalMessage.Create(
+                    string.Format(TerminalMessages.UnexpectedExceptionWhileJsMrgRunner, latestMatchValue), Color.Red));
+                error = true;
+            }
+
 
             return error;
         }
 
         private string Include(MatchInspection matchInspection, string fileContent)
         {
+            // OperationPath + Param'd file from matchInspection.
+            // TODO
+            
             var runner = new JsMrgIncludeRunner(matchInspection, fileContent);
+            // runner.Run();
             
 
             return fileContent;

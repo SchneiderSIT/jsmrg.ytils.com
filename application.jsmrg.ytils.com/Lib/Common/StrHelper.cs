@@ -6,6 +6,11 @@ namespace application.jsmrg.ytils.com.Lib.Common
     public static class StrHelper
     {
         private const string SingleWhiteSpace = " ";
+
+        public static string CutFirstChar(string val)
+        {
+            return val.Substring(1);
+        }
         
         public static string GetTrimmedWhiteSpaceSplitIndex(string val, int index)
         {
