@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace application.jsmrg.ytils.com.Lib.Common
 {
@@ -11,7 +12,6 @@ namespace application.jsmrg.ytils.com.Lib.Common
             if (null != val)
             {
                 var splits = val.Split(SingleWhiteSpace);
-                var ret = new string[splits.Length];
 
                 if (splits.Length >= index)
                 {
@@ -20,6 +20,13 @@ namespace application.jsmrg.ytils.com.Lib.Common
             }
 
             return string.Empty;
+        }
+
+        public static string PopCommand(string val)
+        {
+            var splits = val.Split(SingleWhiteSpace);
+            
+            return String.Join(string.Empty, splits.Skip(1).ToArray());
         }
         
         public static bool IsEncapsulatedBy(string val, string prefix, string suffix, out string extractedVal)
@@ -30,6 +37,8 @@ namespace application.jsmrg.ytils.com.Lib.Common
             if (val.StartsWith(prefix) && val.EndsWith(suffix))
             {
                 extractedVal = RemovePrefix(RemoveSuffix(val, suffix), prefix);
+
+                return true;
             }
 
             return false;

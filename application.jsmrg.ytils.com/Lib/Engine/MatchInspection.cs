@@ -1,19 +1,24 @@
+using System.Text.RegularExpressions;
+
 namespace application.jsmrg.ytils.com.lib.Engine
 {
     public class MatchInspection
     {
-        public static MatchInspection CreateEmpty(MatchInspectionType initialType)
+        public static MatchInspection CreateEmpty(Match match, MatchInspectionType initialType)
         {
             return new MatchInspection()
             {
-                Type = initialType,
-                CommandText = string.Empty,
+                Match = match,
+                Command = initialType,
+                CommandParams = string.Empty,
                 Injection = string.Empty
             };
         }
         
-        public MatchInspectionType Type { get; set; }
+        public Match Match { get; set; }
+        public MatchInspectionType Command { get; set; }
         public string Injection { get; set; }
-        public string CommandText { get; set; }
+        public string CommandParams { get; set; }
+        
     }
 }

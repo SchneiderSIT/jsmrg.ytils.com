@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
 using application.jsmrg.ytils.com.Lib.Terminal;
 
 namespace application.jsmrg.ytils.com.lib.Engine
@@ -19,41 +18,54 @@ namespace application.jsmrg.ytils.com.lib.Engine
         public bool Run(string file, out List<TerminalMessage> messages)
         {
             messages = new List<TerminalMessage>();
-            ResultingFileContent = string.Empty;
 
             ResultingFileContent = File.ReadAllText(file);
             var regex = new Regex(@"/\*\*(jsmrg)(?:(?!\*/).)*\*/", RegexOptions.Singleline);
             var matches = regex.Matches(ResultingFileContent);
+            var error = false;
 
+            error = OperateMatches(messages, matches, file);
+
+            return false == error;
+        }
+
+        private bool OperateMatches(List<TerminalMessage> messages, MatchCollection matches, string file)
+        {
+            var error = false;
             var matchOperator = new MatchOperator();
+            
             foreach (Match match in matches)
             {
                 var inspection = matchOperator.Operate(match);
-                switch (inspection.Type)
+                switch (inspection.Command)
                 {
                     case MatchInspectionType.Include:
-                        file = Include(file, match.Value);
+                        file = Include(inspection, ResultingFileContent);
                         break;
                     case MatchInspectionType.HtmlVar:
-                        file = HtmlVar(file, match.Value);
+                        file = HtmlVar(inspection, ResultingFileContent);
                         break;
                     case MatchInspectionType.Error:
                         messages.Add(TerminalMessage.Create(string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
+                        error = true;
                         break;
                 }
             }
 
-            return true;
+            return error;
         }
 
-        private string Include(string file, string match)
+        private string Include(MatchInspection matchInspection, string fileContent)
         {
-            return file;
+            var runner = new JsMrgIncludeRunner(matchInspection, fileContent);
+            
+
+            return fileContent;
         }
 
-        private string HtmlVar(string file, string match)
+        private string HtmlVar(MatchInspection matchInspection, string fileContent)
         {
-            return file;
+            return fileContent;
         }
     }
 }
