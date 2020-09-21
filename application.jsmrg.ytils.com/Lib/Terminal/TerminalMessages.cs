@@ -20,12 +20,14 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         public static readonly string[] Help = new string[]
         {
             "",
-            "Usage: jsmrg file1 [, file2, [file 3] ...]",
+            "Usage: jsmrg <input-file> <output-file>",
             "",
             "Enter jsmrg --help to open this dialogue.",
             "",
             "Visit https://jsmrg.ytils.com/documentation for a full documentation.",
             "",
         };
+
+        public const string UnexpectedNumberOfParams = "JsMrg expects exactly two params to be launched with.";
     }
 }

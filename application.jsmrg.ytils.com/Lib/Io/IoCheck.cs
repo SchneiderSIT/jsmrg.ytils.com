@@ -6,22 +6,48 @@ using application.jsmrg.ytils.com.Lib.Terminal;
 
 namespace application.jsmrg.ytils.com.lib.IO
 {
-    public class IoCheck : ICheck
+    public class IoCheck
     {
-        /// <summary>
-        /// If no special functionality is being addressed all parameters
-        /// of JsMrg will be interpreted as file paths, either absolute or
-        /// relative.
-        /// </summary>
-        public Check Run(string[] args)
+        public Check CheckReadableAndAccessible(string[] files)
         {
-            return Check.Combine(CheckFilesExist(args), CheckFilesAccessible(args));
+            return Check.Combine(CheckFilesExist(files), CheckFilesAccessible(files));
         }
 
-        /// <summary>
-        /// Check all given files if they are existing. Files can be
-        /// addressed by absolute and relative paths.
-        /// </summary>
+        public Check CheckReadableAndAccessible(string file)
+        {
+            var files = new[] { file };
+
+            return CheckReadableAndAccessible(files);
+        }
+
+        public Check CheckWritable(string file)
+        {
+            var result = Check.Create();
+            
+            if (false == IsWritable(file))
+            {
+                result.CheckResult = CheckResult.Error;
+                result.Messages.Add(new TerminalMessage() { Color = Color.Red, Message = $"{file} is not writable." });
+            }
+
+            return result;
+        }
+        
+        private bool IsWritable(string file)
+        {
+            try
+            {
+                FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Write);
+                fs.Close();
+                
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        
         private Check CheckFilesExist(string[] files)
         {
             var result = Check.Create();

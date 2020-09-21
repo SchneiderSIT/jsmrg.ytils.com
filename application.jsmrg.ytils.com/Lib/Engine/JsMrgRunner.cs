@@ -16,16 +16,15 @@ namespace application.jsmrg.ytils.com.lib.Engine
         
         public string ResultingFileContent { get; private set; }
         public string OperatedFile { get; set; }
-        
         public string OperationPath { get; set; }
 
-        public bool Run(string file, out List<TerminalMessage> messages)
+        public bool Run(string inputFile, string outputFile, out List<TerminalMessage> messages)
         {
             messages = new List<TerminalMessage>();
 
-            OperationPath = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar;
-            ResultingFileContent = File.ReadAllText(file);
-            OperatedFile = file;
+            OperationPath = Path.GetDirectoryName(inputFile) + Path.DirectorySeparatorChar;
+            ResultingFileContent = File.ReadAllText(inputFile);
+            OperatedFile = inputFile;
             var regex = new Regex(@"/\*\*(jsmrg)(?:(?!\*/).)*\*/", RegexOptions.Singleline);
             var matches = regex.Matches(ResultingFileContent);
             var error = false;

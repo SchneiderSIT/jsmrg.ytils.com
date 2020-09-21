@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.Engine;
 using application.jsmrg.ytils.com.lib.IO;
@@ -10,6 +11,8 @@ namespace application.jsmrg.ytils.com.lib
     public class ProgramRunner
     {
         private readonly string[] Args;
+        private string InputFile { get; set; }
+        private string OutputFile  { get; set; }
     
         public ProgramRunner(string[] args)
         {
@@ -36,6 +39,18 @@ namespace application.jsmrg.ytils.com.lib
                 
                 return ProgramRunnerExit.Help;
             }
+
+            // If help is not requested, we are expecting exactly two parameters. 
+            if (2 != Args.Length)
+            {
+                TerminalWriter.WriteTerminalMessage(TerminalMessage.Create(TerminalMessages.UnexpectedNumberOfParams,
+                    Color.Red));
+                    
+                return ProgramRunnerExit.Error;
+            }
+
+            InputFile = Args[0];
+            OutputFile = Args[1];
             
             if (CheckResult.Ok != IoCheck(out var terminalMessages))
             {
@@ -48,7 +63,9 @@ namespace application.jsmrg.ytils.com.lib
             var jsMrgRunner = new JsMrgRunner();
             var combinedRunMessages = new List<TerminalMessage>();
             
-            // Now we are ready to do the full run. 
+            // Now we are ready to do the full run.
+            // TODO
+            /*
             foreach (var file in Args)
             {
                 var runResult = jsMrgRunner.Run(file, out var runMessages);
@@ -61,6 +78,7 @@ namespace application.jsmrg.ytils.com.lib
                     return ProgramRunnerExit.Error;
                 }
             }
+            */
 
             TerminalWriter.WriteTerminalMessages(combinedRunMessages);
             
@@ -114,12 +132,17 @@ namespace application.jsmrg.ytils.com.lib
         private CheckResult IoCheck(out List<TerminalMessage> messages)
         {
             var ioCheck = new IoCheck();
-            var ioCheckResult = ioCheck.Run(Args);
+            var ioCheckInputFile = ioCheck.CheckReadableAndAccessible(InputFile);
+            // TODO
+            // - if file exists, try to write-open 
+            // - if file not exists, try to create and write-open
+            var ioCheckOutputFile = ioCheck.CheckWritable(OutputFile);
+            var combinedIoCheck = Check.Combine(ioCheckInputFile, ioCheckOutputFile);
             
             messages = new List<TerminalMessage>();
-            if (ioCheckResult.CheckResult == CheckResult.Error)
+            if (combinedIoCheck.CheckResult == CheckResult.Error)
             {
-                messages = ioCheckResult.Messages;
+                messages = combinedIoCheck.Messages;
                 
                 return CheckResult.Error;
             }
