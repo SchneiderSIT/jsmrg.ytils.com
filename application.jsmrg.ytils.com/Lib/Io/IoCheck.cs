@@ -37,7 +37,7 @@ namespace application.jsmrg.ytils.com.lib.IO
         {
             try
             {
-                FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Write);
+                FileStream fs = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 fs.Close();
                 
                 return true;

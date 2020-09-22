@@ -61,28 +61,19 @@ namespace application.jsmrg.ytils.com.lib
             }
             
             var jsMrgRunner = new JsMrgRunner();
-            var combinedRunMessages = new List<TerminalMessage>();
+            var runResult = jsMrgRunner.Run(InputFile, OutputFile, out var combinedRunMessages);
+            var runExit = ProgramRunnerExit.Done;
             
-            // Now we are ready to do the full run.
-            // TODO
-            /*
-            foreach (var file in Args)
+            if (false == runResult)
             {
-                var runResult = jsMrgRunner.Run(file, out var runMessages);
-                combinedRunMessages.AddRange(runMessages);
-
-                if (false == runResult)
-                {
-                    TerminalWriter.WriteTerminalMessages(combinedRunMessages);
-                    
-                    return ProgramRunnerExit.Error;
-                }
+                TerminalWriter.WriteTerminalMessage(TerminalMessage.Create("JsMrg run ended with error(s).",
+                    Color.Red));
+                runExit = ProgramRunnerExit.Error;
             }
-            */
 
             TerminalWriter.WriteTerminalMessages(combinedRunMessages);
             
-            return ProgramRunnerExit.Done;
+            return runExit;
         }
 
         /// <summary>
