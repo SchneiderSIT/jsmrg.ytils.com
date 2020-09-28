@@ -76,7 +76,6 @@ namespace application.jsmrg.ytils.com.lib.Engine
                 error = true;
             }
 
-
             return error;
         }
 
@@ -84,7 +83,10 @@ namespace application.jsmrg.ytils.com.lib.Engine
         {
             // OperationPath + Param'd file from matchInspection.
             // TODO
-            
+            if (matchInspection.Command == MatchInspectionType.Error)
+            {
+                
+            }
             var runner = new JsMrgIncludeRunner(matchInspection, fileContent);
             // runner.Run();
             

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using application.jsmrg.ytils.com.Lib.Common;
 using application.jsmrg.ytils.com.lib.Engine;
 using application.jsmrg.ytils.com.lib.IO;
@@ -59,6 +60,8 @@ namespace application.jsmrg.ytils.com.lib
                 // Bail out, we are not ready to run. 
                 return ProgramRunnerExit.IoCheckOut;
             }
+
+            TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense);
             
             var jsMrgRunner = new JsMrgRunner();
             var runResult = jsMrgRunner.Run(InputFile, OutputFile, out var combinedRunMessages);
@@ -74,6 +77,13 @@ namespace application.jsmrg.ytils.com.lib
             TerminalWriter.WriteTerminalMessages(combinedRunMessages);
             
             return runExit;
+        }
+
+        private void OutputStartupMessages()
+        {
+            // TerminalMessages.InitialMessages;
+            
+            // TerminalWriter.WriteTerminalMessage(TerminalMessage.Create())
         }
 
         /// <summary>
@@ -109,7 +119,7 @@ namespace application.jsmrg.ytils.com.lib
         /// </summary>
         private List<TerminalMessage> AddInitialTerminalMessages(List<TerminalMessage> messages)
         {
-            foreach (var message in TerminalMessages.InitialMessages)
+            foreach (var message in TerminalMessages.InitialMessagesWLicense)
             {
                 messages.Add(TerminalMessage.Create(message));
             }

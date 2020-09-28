@@ -9,7 +9,9 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         public const string UnexpectedExceptionWhileJsMrgRunner =
             @"Unexpected exception while running JsMrg on file {0}.";
         
-        public static readonly string[] InitialMessages = new string[]
+        
+        
+        public static readonly string[] InitialMessagesWLicense = new string[]
         {
             "",
             "Ytils JsMrg",

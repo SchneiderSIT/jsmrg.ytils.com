@@ -23,6 +23,21 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 
             return output.ToString();
         }
+
+        /// <summary>
+        /// The simplified string[] representation of WriteTerminalMessages() without specifying a color. 
+        /// </summary>
+        public static string WriteTerminalMessages(string[] messages)
+        {
+            var terminalMessagesList = new List<TerminalMessage>();
+            
+            foreach (var message in messages)
+            {
+                terminalMessagesList.Add(TerminalMessage.Create(message));
+            }
+
+            return WriteTerminalMessages(terminalMessagesList);
+        }
         
         /// <summary>
         /// This method outputs a single TerminalMessage to the console with the given

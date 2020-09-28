@@ -7,7 +7,8 @@ namespace application.jsmrg.ytils.com
         static void Main(string[] args)
         {
             var programRunner = new ProgramRunner(args);
-            programRunner.Run();
+            
+            var exit = programRunner.Run();
         }
     }
 }
