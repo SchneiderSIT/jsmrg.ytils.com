@@ -1,3 +1,4 @@
+using System.Linq;
 using application.jsmrg.ytils.com.lib;
 
 namespace application.jsmrg.ytils.com.Lib.Terminal
@@ -8,9 +9,7 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 
         public const string UnexpectedExceptionWhileJsMrgRunner =
             @"Unexpected exception while running JsMrg on file {0}.";
-        
-        
-        
+
         public static readonly string[] InitialMessagesWLicense = new string[]
         {
             "",
@@ -18,6 +17,9 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
             $"(c) {App.Date}, v{App.Version} by Kim Schneider",
             "Licensed under MIT, see: https://jsmrg.ytils.com/license",
         };
+
+
+        public static string[] InitialMessagesWOLicense1 = (string[])InitialMessagesWLicense.SkipLast(1);
         
         public static readonly string[] Help = new string[]
         {
