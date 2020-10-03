@@ -1,4 +1,3 @@
-using System.Linq;
 using application.jsmrg.ytils.com.lib;
 
 namespace application.jsmrg.ytils.com.Lib.Terminal
@@ -10,13 +9,13 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         public const string UnexpectedExceptionWhileJsMrgRunner =
             @"Unexpected exception while running JsMrg on file {0}.";
 
+        // ReSharper disable once InconsistentNaming
         public static readonly string[] InitialMessagesWOLicense = new string[]
         {
             "",
             "Ytils JsMrg",
             $"(c) {App.Date}, v{App.Version} by Kim Schneider"
         };
-
 
         public static string[] InitialMessagesWLicense1 = InitialMessagesWOLicense;
 
