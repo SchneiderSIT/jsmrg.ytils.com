@@ -10,24 +10,26 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         public const string UnexpectedExceptionWhileJsMrgRunner =
             @"Unexpected exception while running JsMrg on file {0}.";
 
-        public static readonly string[] InitialMessagesWLicense = new string[]
+        public static readonly string[] InitialMessagesWOLicense = new string[]
         {
             "",
             "Ytils JsMrg",
-            $"(c) {App.Date}, v{App.Version} by Kim Schneider",
-            "Licensed under MIT, see: https://jsmrg.ytils.com/license",
+            $"(c) {App.Date}, v{App.Version} by Kim Schneider"
         };
 
 
-        public static string[] InitialMessagesWOLicense1 = (string[])InitialMessagesWLicense.SkipLast(1);
+        public static string[] InitialMessagesWLicense1 = InitialMessagesWOLicense;
+
+        public static string[] InitialMessagesWLicense2 = new string[]
+        {
+            "Licensed under MIT, see: https://jsmrg.ytils.com/license"
+        };
         
         public static readonly string[] Help = new string[]
         {
             "",
             "Usage: jsmrg <input-file> <output-file>",
-            "",
             "Enter jsmrg --help to open this dialogue.",
-            "",
             "Visit https://jsmrg.ytils.com/documentation for a full documentation.",
             "",
         };

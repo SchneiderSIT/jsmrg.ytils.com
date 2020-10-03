@@ -41,6 +41,8 @@ namespace application.jsmrg.ytils.com.lib
                 return ProgramRunnerExit.Help;
             }
 
+            OutputStartupMessages();
+
             // If help is not requested, we are expecting exactly two parameters. 
             if (2 != Args.Length)
             {
@@ -61,7 +63,8 @@ namespace application.jsmrg.ytils.com.lib
                 return ProgramRunnerExit.IoCheckOut;
             }
 
-            TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense);
+            // TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense1);
+            // TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense2);
             
             var jsMrgRunner = new JsMrgRunner();
             var runResult = jsMrgRunner.Run(InputFile, OutputFile, out var combinedRunMessages);
@@ -81,9 +84,7 @@ namespace application.jsmrg.ytils.com.lib
 
         private void OutputStartupMessages()
         {
-            // TerminalMessages.InitialMessages;
-            
-            // TerminalWriter.WriteTerminalMessage(TerminalMessage.Create())
+            TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWOLicense);
         }
 
         /// <summary>
@@ -98,11 +99,16 @@ namespace application.jsmrg.ytils.com.lib
             
             // Will be passed through empty if help is not applied.
             messages = new List<TerminalMessage>();
+            var initialMessagesWLicense = TerminalMessages.InitialMessagesWLicense1
+                .Concat(TerminalMessages.InitialMessagesWLicense2).ToArray();
+            
+            foreach (var message in initialMessagesWLicense)
+            {
+                messages.Add(TerminalMessage.Create(message));    
+            }
 
             if (force || helpCheckResult.CheckResult == CheckResult.Apply)
             {
-                messages = AddInitialTerminalMessages(messages);
-                
                 foreach (var message in TerminalMessages.Help)
                 {
                     messages.Add(TerminalMessage.Create(message));
@@ -112,19 +118,6 @@ namespace application.jsmrg.ytils.com.lib
             }
 
             return CheckResult.Ignore;
-        }
-
-        /// <summary>
-        /// This method adds initial standard messages to every run of JsMrg. 
-        /// </summary>
-        private List<TerminalMessage> AddInitialTerminalMessages(List<TerminalMessage> messages)
-        {
-            foreach (var message in TerminalMessages.InitialMessagesWLicense)
-            {
-                messages.Add(TerminalMessage.Create(message));
-            }
-
-            return messages;
         }
 
         /// <summary>
