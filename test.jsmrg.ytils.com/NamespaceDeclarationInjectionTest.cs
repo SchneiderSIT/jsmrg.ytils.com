@@ -13,6 +13,7 @@ namespace test.jsmrg.ytils.com
         [Test]
         public void TestNamespaceDeclarationInjection()
         {
+            // TODO: New version of JsMrg expects two params to work on a file to have an output. 
             var programRunner = new ProgramRunner(new [] { "_ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
             var result = programRunner.Run();
             
