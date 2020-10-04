@@ -5,6 +5,11 @@ namespace application.jsmrg.ytils.com.lib.IO
 {
     public static class IoHelper
     {
+        public static string CombineOperationPathWithCommandPath(string operationPath, string commandPath)
+        {
+            return Path.Combine(operationPath, commandPath);
+        }
+        
         public static string CreateParamFilePath(string basePath, string paramFilePath)
         {
             if (paramFilePath.StartsWith(Path.DirectorySeparatorChar))

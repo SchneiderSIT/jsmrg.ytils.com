@@ -87,8 +87,9 @@ namespace application.jsmrg.ytils.com.lib.Engine
             {
                 
             }
-            var runner = new JsMrgIncludeRunner(matchInspection, fileContent);
-            // runner.Run();
+            
+            var runner = new JsMrgIncludeRunner(matchInspection, OperationPath, fileContent);
+            fileContent = runner.Run();
             
 
             return fileContent;

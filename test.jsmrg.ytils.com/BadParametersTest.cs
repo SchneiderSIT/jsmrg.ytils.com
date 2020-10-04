@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace test.jsmrg.ytils.com
 {
-    public class NamespaceDeclarationInjectionTest
+    public class BadParametersTest
     {
         [SetUp]
         public void Setup()
@@ -11,13 +11,12 @@ namespace test.jsmrg.ytils.com
         }
 
         [Test]
-        public void TestNamespaceDeclarationInjection()
+        public void TestExpectErrorBecauseOnlyOneFileParameter()
         {
-            // TODO: New version of JsMrg expects two params to work on a file to have an output. 
             var programRunner = new ProgramRunner(new [] { "_ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
             var result = programRunner.Run();
             
-            Assert.AreEqual(ProgramRunnerExit.Done, result);
+            Assert.AreEqual(ProgramRunnerExit.Error, result);
         }
     }
 }

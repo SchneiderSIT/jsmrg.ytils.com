@@ -6,11 +6,13 @@ namespace application.jsmrg.ytils.com.lib.Engine
     {
         protected MatchInspection MatchInspection;
         protected string FileContent;
+        protected string OperationPath;
         
-        public AbstractJsMrgRunner(MatchInspection matchInspection, string fileContent)
+        public AbstractJsMrgRunner(MatchInspection matchInspection, string operationPath, string fileContent)
         {
             MatchInspection = matchInspection;
             FileContent = fileContent;
+            OperationPath = operationPath;
         }
 
         public abstract string Run();
