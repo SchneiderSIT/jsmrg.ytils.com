@@ -62,9 +62,6 @@ namespace application.jsmrg.ytils.com.lib
                 // Bail out, we are not ready to run. 
                 return ProgramRunnerExit.IoCheckOut;
             }
-
-            // TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense1);
-            // TerminalWriter.WriteTerminalMessages(TerminalMessages.InitialMessagesWLicense2);
             
             var jsMrgRunner = new JsMrgRunner();
             var runResult = jsMrgRunner.Run(InputFile, OutputFile, out var combinedRunMessages);

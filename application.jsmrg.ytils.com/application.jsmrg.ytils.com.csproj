@@ -22,6 +22,12 @@
       <None Update="_ResTest\NamespaceDeclarationInjectionTest\NamespaceDeclaration.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="_ResTest\BasicHtmlVarTest\HtmlVar.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="_ResTest\BasicHtmlVarTest\MainFile.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

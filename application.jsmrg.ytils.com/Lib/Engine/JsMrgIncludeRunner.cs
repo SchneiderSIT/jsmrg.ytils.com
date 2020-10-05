@@ -10,8 +10,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
 
         public override string Run()
         {
-            var combinedPath =
-                IoHelper.CombineOperationPathWithCommandPath(OperationPath, MatchInspection.CommandParams);
+            var combinedPath = IoHelper.CombineOperationPathWithCommandPath(OperationPath, MatchInspection.CommandParams);
 
             try
             {

@@ -10,6 +10,8 @@ namespace application.jsmrg.ytils.com.lib.Engine
             var matchingStr = match.Value; // match.Value.ToLower();
             var matchInspection = MatchInspection.CreateEmpty(match, MatchInspectionType.Error);
 
+            // TODO: Distinguish between htmlvar and include, IsEncapsulatedBy() removes whitespaces for nonEncapsulatedStr
+            // TODO: This trims whitespace from htmlvar >>HtmlVar.html ''foo ''bar<< to >>HtmlVar.html''foo''bar<<
             if (StrHelper.IsEncapsulatedBy(matchingStr, JsMrgRunner.CommandPrefix, JsMrgRunner.CommandSuffix,
                 out var nonEncapsulatedStr))
             {
