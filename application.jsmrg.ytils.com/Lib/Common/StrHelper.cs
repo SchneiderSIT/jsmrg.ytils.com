@@ -37,7 +37,6 @@ namespace application.jsmrg.ytils.com.Lib.Common
         public static bool IsEncapsulatedBy(string val, string prefix, string suffix, out string extractedVal)
         {
             extractedVal = val;
-            val = val.ToLower();
             
             if (val.StartsWith(prefix) && val.EndsWith(suffix))
             {

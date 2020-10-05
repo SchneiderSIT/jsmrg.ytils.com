@@ -7,7 +7,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
     {
         public MatchInspection Operate(Match match)
         {
-            var matchingStr = match.Value.ToLower();
+            var matchingStr = match.Value; // match.Value.ToLower();
             var matchInspection = MatchInspection.CreateEmpty(match, MatchInspectionType.Error);
 
             if (StrHelper.IsEncapsulatedBy(matchingStr, JsMrgRunner.CommandPrefix, JsMrgRunner.CommandSuffix,

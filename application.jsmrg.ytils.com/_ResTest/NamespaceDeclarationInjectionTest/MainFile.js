@@ -3,7 +3,7 @@
     "use strict";
     if (!window.YTILS) {
 
-        /**jsmrg include what.js */
+        /**jsmrg include NamespaceDeclaration.js */
 
         /**
          * This method verifies that jQuery is installed in a sufficient version.
