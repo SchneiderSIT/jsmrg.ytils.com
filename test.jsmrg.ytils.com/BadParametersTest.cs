@@ -5,11 +5,6 @@ namespace test.jsmrg.ytils.com
 {
     public class BadParametersTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void TestExpectErrorBecauseOnlyOneFileParameter()
         {

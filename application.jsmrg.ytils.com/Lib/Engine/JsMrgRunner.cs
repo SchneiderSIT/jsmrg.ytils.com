@@ -81,22 +81,17 @@ namespace application.jsmrg.ytils.com.lib.Engine
 
         private string Include(MatchInspection matchInspection, string fileContent)
         {
-            // OperationPath + Param'd file from matchInspection.
-            // TODO
-            if (matchInspection.Command == MatchInspectionType.Error)
-            {
-                
-            }
-            
             var runner = new JsMrgIncludeRunner(matchInspection, OperationPath, fileContent);
             fileContent = runner.Run();
-            
 
             return fileContent;
         }
 
         private string HtmlVar(MatchInspection matchInspection, string fileContent)
         {
+            var runner = new JsMrgHtmlVarRunner(matchInspection, OperationPath, fileContent);
+            fileContent = runner.Run();
+            
             return fileContent;
         }
     }
