@@ -1,34 +1,124 @@
-using System.Text.RegularExpressions;
-using System.Threading;
+using System.Collections.Generic;
+using System.IO;
 using application.jsmrg.ytils.com.Lib.Common;
+using application.jsmrg.ytils.com.lib.IO;
 
 namespace application.jsmrg.ytils.com.lib.Engine
 {
     public class JsMrgHtmlVarRunner : AbstractJsMrgRunner
     {
+        public static readonly string[] HtmlVarPrefixes = { HtmlVarPrefixSingleQuote, HtmlVarPrefixDoubleQuote };
+        
+        private const string HtmlVarPrefixSingleQuote = "''";
+        private const string HtmlVarPrefixDoubleQuote = "\"\"";
+        private const string VarParamEncapsulationPrefix = "{{";
+        private const string VarParamEncapsulationSuffix = "}}";
+
+        private bool LinebreakToSingleWhiteSpace;
+
         public JsMrgHtmlVarRunner(MatchInspection matchInspection, string operationPath, string fileContent) : base(matchInspection, operationPath, fileContent) { }
         public override string Run()
         {
             var matchedStr = MatchInspection.Match.Value;
             var extractedCommandParamAndVars = StrHelper.RemoveHtmlVarCommand(matchedStr);
-
-            // TODO: fileContent vs. >>HtmlVar.html''foo''bar<<
+            LinebreakToSingleWhiteSpace = IsLineBreakToSingleWhitespaceCommanded(extractedCommandParamAndVars, out extractedCommandParamAndVars);
             
-            /*
-            var combinedPath = IoHelper.CombineOperationPathWithCommandPath(OperationPath, MatchInspection.CommandParams);
+            var fileToInclude = GetFilePathToInclude(extractedCommandParamAndVars);
+            
+            var iOCheck = new IoCheck();
+            var checkResult = iOCheck.CheckReadableAndAccessible(fileToInclude);
 
-            try
+            if (CheckResult.Error == checkResult.CheckResult)
             {
-                var includeFileContent = File.ReadAllText(combinedPath);
-                FileContent = FileContent.Replace(MatchInspection.Match.Value, includeFileContent);
+                throw new JsMrgRunnerException($"{fileToInclude} commanded by {matchedStr} is not readable.");
             }
-            catch (Exception)
-            {
-                throw new JsMrgRunnerException($"Failed to extract contents of {combinedPath} to JsMrg command {MatchInspection.Match.Value}.");
-            }
-            */
+
+            List<string> varParams;
+            VerifyVarCommands(extractedCommandParamAndVars, out varParams);
+            
+            var fileToIncludeContent = File.ReadAllText(fileToInclude);
+            fileToIncludeContent = OperateIncludeContentWithVarParams(fileToIncludeContent, varParams);
+            fileToIncludeContent = ReduceToOneLine(fileToIncludeContent);
+
+            FileContent = FileContent.Replace(matchedStr, fileToIncludeContent);
 
             return FileContent;
+        }
+
+        private string ReduceToOneLine(string fileToIncludeContent)
+        {
+            var replacement = LinebreakToSingleWhiteSpace ? StrHelper.SingleWhiteSpace : string.Empty;
+
+            fileToIncludeContent = StrHelper.RemoveLineBreaks(fileToIncludeContent, replacement);
+
+            return fileToIncludeContent;
+        }
+
+        private bool IsLineBreakToSingleWhitespaceCommanded(string commandLine, out string cutCommandLine)
+        {
+            cutCommandLine = commandLine;
+            
+            if (commandLine.StartsWith(JsMrgHtmLVarAdditionalCommand.Lb2Space))
+            {
+                cutCommandLine = StrHelper.RemovePrefix(cutCommandLine, JsMrgHtmLVarAdditionalCommand.Lb2Space);
+                cutCommandLine = cutCommandLine.Trim();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private string OperateIncludeContentWithVarParams(string content, List<string> varParams)
+        {
+            foreach (var varParam in varParams)
+            {
+                if (varParam.StartsWith(HtmlVarPrefixSingleQuote))
+                {
+                    var varName = StrHelper.RemovePrefix(varParam, HtmlVarPrefixSingleQuote);
+
+                    content = content.Replace(CreateVarPlaceholder(varName), $"' + {varName} + '");
+                }
+                else // HtmlVarPrefixDoubleQuote
+                {
+                    var varName = StrHelper.RemovePrefix(varParam, HtmlVarPrefixDoubleQuote);
+
+                    content = content.Replace(CreateVarPlaceholder(varName), $"\" + {varName} + \"");                    
+                }
+            }
+            
+            return content;
+        }
+
+        private string CreateVarPlaceholder(string varName)
+        {
+            return VarParamEncapsulationPrefix + varName + VarParamEncapsulationSuffix;
+        }
+
+        /// <summary>
+        /// This method verifies if all html vars that should be handled in given file have the right prefix.
+        /// </summary>
+        private void VerifyVarCommands(string commandParamAndVars, out List<string> varParams) 
+        {
+            varParams = StrHelper.GetWhiteSpaceSplittedStrArr(commandParamAndVars);
+            if (varParams.Count > 1)
+            {
+                varParams.RemoveAt(0);
+                foreach (var varParam in varParams)
+                {
+                    if (false == StrHelper.IsPrefixedByOneOfPrefixes(varParam, HtmlVarPrefixes))
+                    {
+                        throw new JsMrgRunnerException($"htmlvar var replacements have to start with either <''> or <\"\">, found: {varParam} in command {MatchInspection.Match.Value}");
+                    }
+                }
+            }
+            
+            // Else: Nothing to do. 
+        }
+
+        private string GetFilePathToInclude(string commandParamAndVars)
+        {
+            return Path.Combine(OperationPath, StrHelper.GetWhiteSpaceSplittedStrArr(commandParamAndVars)[0]);
         }
     }
 }

@@ -7,11 +7,24 @@ namespace application.jsmrg.ytils.com.Lib.Common
 {
     public static class StrHelper
     {
-        private const string SingleWhiteSpace = " ";
+        public const string SingleWhiteSpace = " ";
 
         public static string CutFirstChar(string val)
         {
             return val.Substring(1);
+        }
+
+        public static bool IsPrefixedByOneOfPrefixes(string val, string[] prefixes)
+        {
+            foreach (var prefix in prefixes)
+            {
+                if (val.StartsWith(prefix))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static List<string> GetWhiteSpaceSplittedStrArr(string val)
@@ -32,7 +45,7 @@ namespace application.jsmrg.ytils.com.Lib.Common
 
             return ret;
         }
-        
+
         public static string GetTrimmedWhiteSpaceSplitIndex(string val, int index)
         {
             if (null != val)
@@ -90,9 +103,14 @@ namespace application.jsmrg.ytils.com.Lib.Common
             return false;
         }
 
-        private static string RemovePrefix(string val, string prefix)
+        public static string RemovePrefix(string val, string prefix)
         {
             return val.Remove(0, prefix.Length);
+        }
+
+        public static string RemoveLineBreaks(string val, string replacement)
+        {
+            return val.Replace(System.Environment.NewLine, replacement);
         }
 
         private static string RemoveSuffix(string val, string suffix)
