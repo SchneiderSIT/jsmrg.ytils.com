@@ -1,7 +1,7 @@
 using application.jsmrg.ytils.com.lib;
 using NUnit.Framework;
 
-namespace test.jsmrg.ytils.com
+namespace test.jsmrg.ytils.com.IntegrationTest
 {
     public class BadParametersTest
     {

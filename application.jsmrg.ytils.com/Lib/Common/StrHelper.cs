@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using application.jsmrg.ytils.com.lib.Engine;
 
 namespace application.jsmrg.ytils.com.Lib.Common
 {
@@ -27,6 +28,27 @@ namespace application.jsmrg.ytils.com.Lib.Common
             return string.Empty;
         }
 
+        /// <summary>
+        /// This method removes the jsmrg command alongside with htmlvar command infix. 
+        /// </summary>
+        public static string RemoveHtmlVarCommand(string val)
+        {
+            var originalVal = val;
+            val = val.Replace(JsMrgRunner.CommandPrefix, String.Empty);
+            val = val.Replace(JsMrgRunner.CommandSuffix, String.Empty);
+            val = val.Trim();
+            
+            if (val.StartsWith(JsMrgCommand.HtmlVar))
+            {
+                val = RemovePrefix(val, JsMrgCommand.HtmlVar);
+                val = val.Trim();
+
+                return val;
+            }
+            
+            return originalVal;
+        }
+        
         public static string PopCommand(string val)
         {
             var splits = val.Split(SingleWhiteSpace);

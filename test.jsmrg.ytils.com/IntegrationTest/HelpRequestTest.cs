@@ -1,7 +1,7 @@
 using application.jsmrg.ytils.com.lib;
 using NUnit.Framework;
 
-namespace test.jsmrg.ytils.com
+namespace test.jsmrg.ytils.com.IntegrationTest
 {
     public class HelpRequestTest
     {
@@ -9,8 +9,8 @@ namespace test.jsmrg.ytils.com
         public void TestHelp0()
         {
             Assert.AreEqual(ProgramRunnerExit.Help,RunProgramForHelp(new string[] { }));
-            Assert.AreEqual(ProgramRunnerExit.Help,RunProgramForHelp(new string[] { "--help" }));
-            Assert.AreEqual(ProgramRunnerExit.Help,RunProgramForHelp(new string[] { "--?" }));
+            Assert.AreEqual(ProgramRunnerExit.Help,RunProgramForHelp(new[] { "--help" }));
+            Assert.AreEqual(ProgramRunnerExit.Help,RunProgramForHelp(new[] { "--?" }));
         }
 
         private ProgramRunnerExit RunProgramForHelp(string[] args)
