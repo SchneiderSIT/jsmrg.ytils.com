@@ -9,7 +9,8 @@ namespace application.jsmrg.ytils.com.lib.Engine
         public JsMrgHtmlVarRunner(MatchInspection matchInspection, string operationPath, string fileContent) : base(matchInspection, operationPath, fileContent) { }
         public override string Run()
         {
-            
+            var matchedStr = MatchInspection.Match.Value;
+            var extractedCommandParamAndVars = StrHelper.RemoveHtmlVarCommand(matchedStr);
 
             // TODO: fileContent vs. >>HtmlVar.html''foo''bar<<
             

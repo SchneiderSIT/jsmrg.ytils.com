@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using application.jsmrg.ytils.com.lib.Engine;
 
@@ -11,6 +12,25 @@ namespace application.jsmrg.ytils.com.Lib.Common
         public static string CutFirstChar(string val)
         {
             return val.Substring(1);
+        }
+
+        public static List<string> GetWhiteSpaceSplittedStrArr(string val)
+        {
+            var ret = new List<string>();
+            
+            var splits = val.Split(SingleWhiteSpace);
+            if (splits.Length > 1)
+            {
+                foreach (var split in splits)
+                {
+                    if (string.Empty != split.Trim())
+                    {
+                        ret.Add(split);
+                    }
+                }
+            }
+
+            return ret;
         }
         
         public static string GetTrimmedWhiteSpaceSplitIndex(string val, int index)
