@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
+using application.jsmrg.ytils.com.lib.IO;
 using application.jsmrg.ytils.com.Lib.Terminal;
 
 namespace application.jsmrg.ytils.com.lib.Engine
@@ -27,12 +28,24 @@ namespace application.jsmrg.ytils.com.lib.Engine
             var matches = regex.Matches(ResultingFileContent);
             var error = false;
 
-            error = OperateMatches(messages, matches);
+            var operationResult = OperateMatches(messages, matches);
+            messages = operationResult.Messages;
+            
+            if (operationResult.IsOk)
+            {
+                if (false == IoHelper.WriteOutputFile(outputFile, ResultingFileContent))
+                {
+                    messages.Add(TerminalMessage.Create($"JsMrg complete, but failed to write output file {outputFile}.", Color.Red));
+                    
+                    // Last operation failed, so overwrite IsOk:
+                    operationResult.IsOk = false;
+                }
+            }
 
-            return false == error;
+            return operationResult.IsOk;
         }
 
-        private bool OperateMatches(List<TerminalMessage> messages, MatchCollection matches)
+        private OperateMatchesResult OperateMatches(List<TerminalMessage> messages, MatchCollection matches)
         {
             var error = false;
             var matchOperator = new MatchOperator();
@@ -74,7 +87,16 @@ namespace application.jsmrg.ytils.com.lib.Engine
                 error = true;
             }
 
-            return error;
+            if (false == error)
+            {
+                ResultingFileContent = resultingFileContent;
+            }
+
+            return new OperateMatchesResult()
+            {
+                Messages = messages,
+                IsOk = false == error
+            };
         }
 
         private string Include(MatchInspection matchInspection, string fileContent)
