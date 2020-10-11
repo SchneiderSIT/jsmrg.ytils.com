@@ -26,7 +26,6 @@ namespace application.jsmrg.ytils.com.lib.Engine
             OperatedFile = inputFile;
             var regex = new Regex(@"/\*\*(jsmrg)(?:(?!\*/).)*\*/", RegexOptions.Singleline);
             var matches = regex.Matches(ResultingFileContent);
-            var error = false;
 
             var operationResult = OperateMatches(messages, matches);
             messages = operationResult.Messages;
