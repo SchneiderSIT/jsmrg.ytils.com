@@ -27,10 +27,10 @@ namespace test.jsmrg.ytils.com.ComponentTest
         [Test]
         public void TestIsPrefixedByOneOfPrefixes()
         {
-            var good0 = "''foo";
-            var good1 = "\"\"foo";
-            var bad0 = "'foo";
-            var bad1 = "\"foo";
+            var good0 = "%s%foo";
+            var good1 = "%d%foo";
+            var bad0 = "%sfoo";
+            var bad1 = "%%dfoo";
             var bad2 = "foo";
             
             Assert.True(StrHelper.IsPrefixedByOneOfPrefixes(good0, JsMrgHtmlVarRunner.HtmlVarPrefixes));
