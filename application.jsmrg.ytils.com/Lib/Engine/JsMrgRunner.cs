@@ -32,7 +32,12 @@ namespace application.jsmrg.ytils.com.lib.Engine
             
             if (operationResult.IsOk)
             {
-                if (false == IoHelper.WriteOutputFile(outputFile, ResultingFileContent))
+                if (IoHelper.WriteOutputFile(outputFile, ResultingFileContent))
+                {
+                    messages.Add(TerminalMessage.Create($"JsMrg successful.", Color.DarkGreen));
+                    messages.Add(TerminalMessage.LineBreak());
+                }
+                else
                 {
                     messages.Add(TerminalMessage.Create($"JsMrg complete, but failed to write output file {outputFile}.", Color.Red));
                     

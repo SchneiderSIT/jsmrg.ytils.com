@@ -5,6 +5,11 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 {
     public class TerminalMessage
     {
+        public static TerminalMessage LineBreak()
+        {
+            return Create(string.Empty);
+        }
+        
         public static TerminalMessage Create(string message)
         {
             return new TerminalMessage() { Message = message };
