@@ -15,6 +15,8 @@ namespace application.jsmrg.ytils.com.lib.Engine
         private const string VarParamEncapsulationSuffix = "}}";
 
         private bool LinebreakToSingleWhiteSpace;
+        private bool EscapeDoubleQuotes;
+        private bool EscapeSingleQuotes;
 
         public JsMrgHtmlVarRunner(MatchInspection matchInspection, string operationPath, string fileContent) : base(matchInspection, operationPath, fileContent) { }
         public override string Run()
@@ -22,6 +24,8 @@ namespace application.jsmrg.ytils.com.lib.Engine
             var matchedStr = MatchInspection.Match.Value;
             var extractedCommandParamAndVars = StrHelper.RemoveHtmlVarCommand(matchedStr);
             LinebreakToSingleWhiteSpace = IsLineBreakToSingleWhitespaceCommanded(extractedCommandParamAndVars, out extractedCommandParamAndVars);
+            EscapeDoubleQuotes = IsEscapeDoubleQuotesCommanded(extractedCommandParamAndVars, out extractedCommandParamAndVars);
+            EscapeSingleQuotes = IsEscapeSingleQuotesCommanded(extractedCommandParamAndVars, out extractedCommandParamAndVars);
             
             var fileToInclude = GetFilePathToInclude(extractedCommandParamAndVars);
             
@@ -39,10 +43,25 @@ namespace application.jsmrg.ytils.com.lib.Engine
             var fileToIncludeContent = File.ReadAllText(fileToInclude);
             fileToIncludeContent = OperateIncludeContentWithVarParams(fileToIncludeContent, varParams);
             fileToIncludeContent = ReduceToOneLine(fileToIncludeContent);
+            fileToIncludeContent = ApplyEscapings(fileToIncludeContent);
 
             FileContent = FileContent.Replace(matchedStr, fileToIncludeContent);
 
             return FileContent;
+        }
+
+        private string ApplyEscapings(string fileToIncludeContent)
+        {
+            if (EscapeDoubleQuotes)
+            {
+                fileToIncludeContent = fileToIncludeContent.Replace("\"", "\\\"");
+            }
+            if (EscapeSingleQuotes)
+            {
+                fileToIncludeContent = fileToIncludeContent.Replace("'", "\\'");
+            }
+
+            return fileToIncludeContent;
         }
 
         private string ReduceToOneLine(string fileToIncludeContent)
@@ -54,13 +73,28 @@ namespace application.jsmrg.ytils.com.lib.Engine
             return fileToIncludeContent;
         }
 
+        private bool IsEscapeSingleQuotesCommanded(string commandLine, out string cutCommandLine)
+        {
+            return OperateOptionalHtmlVarCommand(JsMrgHtmLVarAdditionalCommand.EscSingleQuotes, commandLine, out cutCommandLine);
+        }
+        
+        private bool IsEscapeDoubleQuotesCommanded(string commandLine, out string cutCommandLine)
+        {
+            return OperateOptionalHtmlVarCommand(JsMrgHtmLVarAdditionalCommand.EscDoubleQuotes, commandLine, out cutCommandLine);
+        }
+
         private bool IsLineBreakToSingleWhitespaceCommanded(string commandLine, out string cutCommandLine)
+        {
+            return OperateOptionalHtmlVarCommand(JsMrgHtmLVarAdditionalCommand.Lb2Space, commandLine, out cutCommandLine);
+        }
+        
+        private bool OperateOptionalHtmlVarCommand(string commandToCheck, string commandLine, out string cutCommandLine)
         {
             cutCommandLine = commandLine;
             
-            if (commandLine.StartsWith(JsMrgHtmLVarAdditionalCommand.Lb2Space))
+            if (commandLine.StartsWith(commandToCheck))
             {
-                cutCommandLine = StrHelper.RemovePrefix(cutCommandLine, JsMrgHtmLVarAdditionalCommand.Lb2Space);
+                cutCommandLine = StrHelper.RemovePrefix(cutCommandLine, commandToCheck);
                 cutCommandLine = cutCommandLine.Trim();
 
                 return true;
