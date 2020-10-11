@@ -9,8 +9,8 @@ namespace application.jsmrg.ytils.com.lib.Engine
     {
         public static readonly string[] HtmlVarPrefixes = { HtmlVarPrefixSingleQuote, HtmlVarPrefixDoubleQuote };
         
-        private const string HtmlVarPrefixSingleQuote = "''";
-        private const string HtmlVarPrefixDoubleQuote = "\"\"";
+        private const string HtmlVarPrefixSingleQuote = "%s%";
+        private const string HtmlVarPrefixDoubleQuote = "%d%";
         private const string VarParamEncapsulationPrefix = "{{";
         private const string VarParamEncapsulationSuffix = "}}";
 
@@ -41,9 +41,9 @@ namespace application.jsmrg.ytils.com.lib.Engine
             VerifyVarCommands(extractedCommandParamAndVars, out varParams);
             
             var fileToIncludeContent = File.ReadAllText(fileToInclude);
+            fileToIncludeContent = ApplyEscapings(fileToIncludeContent);
             fileToIncludeContent = OperateIncludeContentWithVarParams(fileToIncludeContent, varParams);
             fileToIncludeContent = ReduceToOneLine(fileToIncludeContent);
-            fileToIncludeContent = ApplyEscapings(fileToIncludeContent);
 
             FileContent = FileContent.Replace(matchedStr, fileToIncludeContent);
 
@@ -92,9 +92,9 @@ namespace application.jsmrg.ytils.com.lib.Engine
         {
             cutCommandLine = commandLine;
             
-            if (commandLine.StartsWith(commandToCheck))
+            if (commandLine.Contains(commandToCheck))
             {
-                cutCommandLine = StrHelper.RemovePrefix(cutCommandLine, commandToCheck);
+                cutCommandLine = cutCommandLine.Replace(commandToCheck, string.Empty);
                 cutCommandLine = cutCommandLine.Trim();
 
                 return true;
