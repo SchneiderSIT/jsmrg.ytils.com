@@ -11,6 +11,8 @@ namespace application.jsmrg.ytils.com.lib
 {
     public class ProgramRunner
     {
+        public string JsMrgOutput { get; internal set; }
+        
         private readonly string[] Args;
         private string InputFile { get; set; }
         private string OutputFile  { get; set; }
@@ -75,7 +77,11 @@ namespace application.jsmrg.ytils.com.lib
             }
 
             TerminalWriter.WriteTerminalMessages(combinedRunMessages);
-            
+            if (runExit == ProgramRunnerExit.Done)
+            {
+                JsMrgOutput = jsMrgRunner.ResultingFileContent;
+            }
+
             return runExit;
         }
 
