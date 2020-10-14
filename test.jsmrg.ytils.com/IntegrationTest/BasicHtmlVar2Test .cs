@@ -8,7 +8,7 @@ namespace test.jsmrg.ytils.com.IntegrationTest
         [Test]
         public void TestBasicHtmlVar2()
         {
-            var programRunner = new ProgramRunner(new [] { "_ResTest/BasicHtmlVar2Test/MainFile2.js", "_ResTest/BasicHtmlVar2Test/MainFile2.out.js" });
+            var programRunner = new ProgramRunner(new [] { "ResTest/BasicHtmlVar2Test/MainFile2.js", "ResTest/BasicHtmlVar2Test/MainFile2.out.js" });
             var result = programRunner.Run();
             var output = programRunner.JsMrgOutput;
             

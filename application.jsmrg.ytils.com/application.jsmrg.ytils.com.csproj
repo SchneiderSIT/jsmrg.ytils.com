@@ -16,25 +16,25 @@
       <None Update="ResTest\NamespaceDeclarationInjectionTest\NamespaceDeclaration.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\NamespaceDeclarationInjectionTest\MainFile.js">
+      <None Update="ResTest\NamespaceDeclarationInjectionTest\MainFile.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\NamespaceDeclarationInjectionTest\NamespaceDeclaration.js">
+      <None Update="ResTest\NamespaceDeclarationInjectionTest\NamespaceDeclaration.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\BasicHtmlVarTest\HtmlVar.html">
+      <None Update="ResTest\BasicHtmlVarTest\HtmlVar.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\BasicHtmlVarTest\MainFile.js">
+      <None Update="ResTest\BasicHtmlVarTest\MainFile.js">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\BasicHtmlVar2Test\MainFile2.js">
+      <None Update="ResTest\BasicHtmlVar2Test\MainFile2.js">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\BasicHtmlVar2Test\HtmlVar2b.html">
+      <None Update="ResTest\BasicHtmlVar2Test\HtmlVar2b.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="_ResTest\BasicHtmlVar2Test\HtmlVar2a.html">
+      <None Update="ResTest\BasicHtmlVar2Test\HtmlVar2a.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

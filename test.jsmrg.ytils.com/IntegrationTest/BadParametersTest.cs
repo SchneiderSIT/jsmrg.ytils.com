@@ -8,7 +8,7 @@ namespace test.jsmrg.ytils.com.IntegrationTest
         [Test]
         public void TestExpectErrorBecauseOnlyOneFileParameter()
         {
-            var programRunner = new ProgramRunner(new [] { "_ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
+            var programRunner = new ProgramRunner(new [] { "ResTest/NamespaceDeclarationInjectionTest/MainFile.js" });
             var result = programRunner.Run();
             
             Assert.AreEqual(ProgramRunnerExit.Error, result);

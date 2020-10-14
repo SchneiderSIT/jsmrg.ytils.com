@@ -8,7 +8,7 @@ namespace test.jsmrg.ytils.com.IntegrationTest
         [Test]
         public void TestNamespaceDeclarationInjection()
         {
-            var programRunner = new ProgramRunner(new [] { "_ResTest/NamespaceDeclarationInjectionTest/MainFile.js", "_ResTest/NamespaceDeclarationInjectionTest/MainFile.out.js" });
+            var programRunner = new ProgramRunner(new [] { "ResTest/NamespaceDeclarationInjectionTest/MainFile.js", "ResTest/NamespaceDeclarationInjectionTest/MainFile.out.js" });
             var result = programRunner.Run();
             var output = programRunner.JsMrgOutput;
             
