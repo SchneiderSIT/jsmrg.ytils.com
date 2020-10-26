@@ -37,6 +37,12 @@
       <None Update="ResTest\BasicHtmlVar2Test\HtmlVar2a.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="ResTest\BasicHtmlVarWOVarsTest\MainFile.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ResTest\BasicHtmlVarWOVarsTest\HtmlVarWOVar.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
