@@ -28,6 +28,10 @@ namespace application.jsmrg.ytils.com.lib.Engine
             EscapeSingleQuotes = IsEscapeSingleQuotesCommanded(extractedCommandParamAndVars, out extractedCommandParamAndVars);
             
             var fileToInclude = GetFilePathToInclude(extractedCommandParamAndVars);
+            if (null == fileToInclude)
+            {
+                throw new JsMrgRunnerException($"Failed to extract file to load within JsMrgHtmlVarRunner.");
+            }
             
             var iOCheck = new IoCheck();
             var checkResult = iOCheck.CheckReadableAndAccessible(fileToInclude);
@@ -152,7 +156,15 @@ namespace application.jsmrg.ytils.com.lib.Engine
 
         private string GetFilePathToInclude(string commandParamAndVars)
         {
-            return Path.Combine(OperationPath, StrHelper.GetWhiteSpaceSplittedStrArr(commandParamAndVars)[0]);
+            var fileInFilePathList = StrHelper.GetWhiteSpaceSplittedStrArr(commandParamAndVars);
+            if (fileInFilePathList.Count >= 1)
+            {
+                var fileInFilePathFirst = fileInFilePathList[0];
+                
+                return Path.Combine(OperationPath, fileInFilePathFirst);
+            }
+
+            return null;
         }
     }
 }

@@ -11,7 +11,7 @@
         
         var foo = "";
         var bar = "";
-        var html = "/**jsmrg htmlvar    escdoublequotes    HtmlVarWOVar.html */";
+        var html = "/**jsmrg htmlvar    escdoublequotes    HtmlVar.html  %d%foo %d%bar  */";
     }
 
 }());

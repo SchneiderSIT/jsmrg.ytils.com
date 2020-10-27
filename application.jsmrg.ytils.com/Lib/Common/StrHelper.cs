@@ -32,7 +32,7 @@ namespace application.jsmrg.ytils.com.Lib.Common
             var ret = new List<string>();
             
             var splits = val.Split(SingleWhiteSpace);
-            if (splits.Length > 1)
+            if (splits.Length >= 1)
             {
                 foreach (var split in splits)
                 {

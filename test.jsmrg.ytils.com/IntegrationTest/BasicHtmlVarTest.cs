@@ -8,13 +8,19 @@ namespace test.jsmrg.ytils.com.IntegrationTest
         [Test]
         public void TestBasicHtmlVar()
         {
-            var programRunner = new ProgramRunner(new [] { "ResTest/BasicHtmlVarTest/MainFile.js", "ResTest/BasicHtmlVarTest/MainFile.out.js" });
+            var programRunner = new ProgramRunner(new[]
+                {"ResTest/BasicHtmlVarTest/MainFile.js", "ResTest/BasicHtmlVarTest/MainFile.out.js"});
             var result = programRunner.Run();
             var output = programRunner.JsMrgOutput;
-            
+
             Assert.AreEqual(ProgramRunnerExit.Done, result);
-            Assert.True(output.Contains("<div class=\\\"someContainer\\\">"));
-            Assert.True(output.Contains("<div class=\\\"\" + foo + \"\\\">\" + bar + \"</div>"));
+            
+            var containsSomeContainer = output.Contains("<div class=\\\"someContainer\\\">");
+            Assert.True(containsSomeContainer);
+            
+            var expectedFooBarString = "<div class=\\\"\" + foo + \"\\\">\" + bar + \"</div>";
+            var containsFooBar = output.Contains(expectedFooBarString);
+            Assert.True(containsFooBar);
         }
     }
 }
