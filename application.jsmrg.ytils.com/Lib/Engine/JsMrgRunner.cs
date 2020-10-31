@@ -15,15 +15,17 @@ namespace application.jsmrg.ytils.com.lib.Engine
         
         public string ResultingFileContent { get; private set; }
         public string OperatedFile { get; set; }
-        public string OperationPath { get; set; }
+        public string EnvironmentPath { get; set; }
 
         public bool Run(string inputFile, string outputFile, out List<TerminalMessage> messages)
         {
             messages = new List<TerminalMessage>();
 
-            OperationPath = Path.GetDirectoryName(inputFile) + Path.DirectorySeparatorChar;
+            Console.WriteLine("inputFile: " + inputFile);
+            EnvironmentPath = IoHelper.GetEnvironmentPath();
             ResultingFileContent = File.ReadAllText(inputFile);
             OperatedFile = inputFile;
+            
             var regex = new Regex(@"/\*\*(jsmrg)(?:(?!\*/).)*\*/", RegexOptions.Singleline);
             var matches = regex.Matches(ResultingFileContent);
 
@@ -71,8 +73,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
                             resultingFileContent = HtmlVar(inspection, resultingFileContent);
                             break;
                         case MatchInspectionType.Error:
-                            messages.Add(TerminalMessage.Create(
-                                string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
+                            messages.Add(TerminalMessage.Create(string.Format(TerminalMessages.StoppingJsMrgRunner, match.Value), Color.Red));
                             error = true;
                             break;
                     }
@@ -80,8 +81,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
             }
             catch (JsMrgRunnerException jsMrgRunnerException)
             {
-                messages.Add(TerminalMessage.Create(
-                    string.Format(TerminalMessages.StoppingJsMrgRunner, jsMrgRunnerException.Message), Color.Red));
+                messages.Add(TerminalMessage.Create(string.Format(jsMrgRunnerException.Message, jsMrgRunnerException.Message), Color.Red));
                 error = true;
             }
             catch (Exception)
@@ -104,7 +104,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
 
         private string Include(MatchInspection matchInspection, string fileContent)
         {
-            var runner = new JsMrgIncludeRunner(matchInspection, OperationPath, fileContent);
+            var runner = new JsMrgIncludeRunner(matchInspection, EnvironmentPath, fileContent);
             fileContent = runner.Run();
 
             return fileContent;
@@ -112,7 +112,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
 
         private string HtmlVar(MatchInspection matchInspection, string fileContent)
         {
-            var runner = new JsMrgHtmlVarRunner(matchInspection, OperationPath, fileContent);
+            var runner = new JsMrgHtmlVarRunner(matchInspection, EnvironmentPath, fileContent);
             fileContent = runner.Run();
             
             return fileContent;

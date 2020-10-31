@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -72,7 +73,7 @@ namespace application.jsmrg.ytils.com.lib
             
             if (false == runResult)
             {
-                var tm = TerminalMessage.Create("JsMrg run ended with error(s).", Color.Red);
+                var tm = TerminalMessage.Create(TerminalMessages.JsMrgRunEndedWErrors, Color.Red);
                 TerminalWriter.WriteTerminalMessage(tm);
                 
                 runExit = ProgramRunnerExit.Error;

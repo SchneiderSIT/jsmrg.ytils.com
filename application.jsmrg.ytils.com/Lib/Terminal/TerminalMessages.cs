@@ -9,9 +9,9 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         public const string GeneralFileAccessErrorMessageEnvironmentPath = "Current environment path is {0}.";
         
         public const string StoppingJsMrgRunner = @"Failed to apply {0}, file not existing or invalid command.";
+        public const string JsMrgRunEndedWErrors = "JsMrg run ended with error(s).";
 
-        public const string UnexpectedExceptionWhileJsMrgRunner =
-            @"Unexpected exception while running JsMrg on file {0}.";
+        public const string UnexpectedExceptionWhileJsMrgRunner = @"Unexpected exception while running JsMrg on file {0}.";
 
         // ReSharper disable once InconsistentNaming
         public static readonly string[] InitialMessagesWOLicense = new string[]
