@@ -11,7 +11,7 @@ namespace application.jsmrg.ytils.com.lib
 {
     public class ProgramRunner
     {
-        public string JsMrgOutput { get; internal set; }
+        public string JsMrgOutput { get; private set; }
         
         private readonly string[] Args;
         private string InputFile { get; set; }
@@ -48,8 +48,8 @@ namespace application.jsmrg.ytils.com.lib
             // If help is not requested, we are expecting exactly two parameters. 
             if (2 != Args.Length)
             {
-                TerminalWriter.WriteTerminalMessage(TerminalMessage.Create(TerminalMessages.UnexpectedNumberOfParams,
-                    Color.Red));
+                var tm = TerminalMessage.Create(TerminalMessages.UnexpectedNumberOfParams, Color.Red);
+                TerminalWriter.WriteTerminalMessage(tm);
                     
                 return ProgramRunnerExit.Error;
             }
@@ -71,8 +71,9 @@ namespace application.jsmrg.ytils.com.lib
             
             if (false == runResult)
             {
-                TerminalWriter.WriteTerminalMessage(TerminalMessage.Create("JsMrg run ended with error(s).",
-                    Color.Red));
+                var tm = TerminalMessage.Create("JsMrg run ended with error(s).", Color.Red);
+                TerminalWriter.WriteTerminalMessage(tm);
+                
                 runExit = ProgramRunnerExit.Error;
             }
 

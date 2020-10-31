@@ -4,6 +4,10 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
 {
     public static class TerminalMessages
     {
+        public const string GeneralFileAccessErrorMessageInitial = @"One or more IO error(s) occured.";
+        public const string GeneralFileAccessErrorMessageExecutionPath = "Current execution path is {0}.";
+        public const string GeneralFileAccessErrorMessageEnvironmentPath = "Current environment path is {0}.";
+        
         public const string StoppingJsMrgRunner = @"Failed to apply {0}, file not existing or invalid command.";
 
         public const string UnexpectedExceptionWhileJsMrgRunner =

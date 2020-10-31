@@ -44,6 +44,8 @@ namespace application.jsmrg.ytils.com.lib.IO
             }
             catch (Exception)
             {
+                TerminalWriter.WriteLocation();
+                
                 return false;
             }
         }
@@ -56,6 +58,8 @@ namespace application.jsmrg.ytils.com.lib.IO
             {
                 if (false == File.Exists(file))
                 {
+                    TerminalWriter.WriteLocation();
+                    
                     result.CheckResult = CheckResult.Error;
                     result.Messages.Add(new TerminalMessage() { Color = Color.Red, Message = $"{file} is not a file." });
                 }
@@ -79,16 +83,22 @@ namespace application.jsmrg.ytils.com.lib.IO
                     {
                         if (false == fileStream.CanRead && fileStream.CanWrite)
                         {
+                            TerminalWriter.WriteLocation();
+                            
                             SetResultNotAccessible(result, file);
                         }
                     }
                 }
                 catch (DirectoryNotFoundException)
                 {
+                    TerminalWriter.WriteLocation();
+                    
                     result = SetResultNotAccessible(result, file);
                 }
                 catch (Exception)
                 {
+                    TerminalWriter.WriteLocation();
+                    
                     result = SetResultNotAccessible(result, file);
                 }
             }

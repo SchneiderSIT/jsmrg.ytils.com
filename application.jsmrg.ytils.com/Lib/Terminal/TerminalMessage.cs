@@ -1,11 +1,17 @@
 using System.Drawing;
 using System.Dynamic;
+using System.Text;
 
 namespace application.jsmrg.ytils.com.Lib.Terminal
 {
     public class TerminalMessage
     {
         public static TerminalMessage LineBreak()
+        {
+            return Create(string.Empty);
+        }
+
+        public static TerminalMessage CreateEmpty()
         {
             return Create(string.Empty);
         }

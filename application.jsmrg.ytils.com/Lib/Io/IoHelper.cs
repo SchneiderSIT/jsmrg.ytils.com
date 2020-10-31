@@ -6,6 +6,16 @@ namespace application.jsmrg.ytils.com.lib.IO
 {
     public static class IoHelper
     {
+        public static string GetExecutionPath()
+        {
+            return System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
+        }
+
+        public static string GetEnvironmentPath()
+        {
+            return Environment.CurrentDirectory;
+        }
+    
         public static string CombineOperationPathWithCommandPath(string operationPath, string commandPath)
         {
             return Path.Combine(operationPath, commandPath);

@@ -84,10 +84,9 @@ namespace application.jsmrg.ytils.com.lib.Engine
                     string.Format(TerminalMessages.StoppingJsMrgRunner, jsMrgRunnerException.Message), Color.Red));
                 error = true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                messages.Add(TerminalMessage.Create(
-                    string.Format(TerminalMessages.UnexpectedExceptionWhileJsMrgRunner, latestMatchValue), Color.Red));
+                messages.Add(TerminalMessage.Create(string.Format(TerminalMessages.UnexpectedExceptionWhileJsMrgRunner, latestMatchValue), Color.Red));
                 error = true;
             }
 
