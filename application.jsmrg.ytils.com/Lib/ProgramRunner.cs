@@ -55,6 +55,7 @@ namespace application.jsmrg.ytils.com.lib
             }
 
             InputFile = Args[0];
+            InputFile = IoHelper.OptionalAdjustmentToAbsolutPath(InputFile);
             OutputFile = Args[1];
             
             if (CheckResult.Ok != IoCheck(out var terminalMessages))
@@ -131,9 +132,7 @@ namespace application.jsmrg.ytils.com.lib
         {
             var ioCheck = new IoCheck();
             var ioCheckInputFile = ioCheck.CheckReadableAndAccessible(InputFile);
-            // TODO
-            // - if file exists, try to write-open 
-            // - if file not exists, try to create and write-open
+            
             var ioCheckOutputFile = ioCheck.CheckWritable(OutputFile);
             var combinedIoCheck = Check.Combine(ioCheckInputFile, ioCheckOutputFile);
             
