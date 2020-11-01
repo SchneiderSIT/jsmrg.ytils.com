@@ -20,8 +20,7 @@ namespace application.jsmrg.ytils.com.lib.Engine
         public bool Run(string inputFile, string outputFile, out List<TerminalMessage> messages)
         {
             messages = new List<TerminalMessage>();
-
-            Console.WriteLine("inputFile: " + inputFile);
+            
             EnvironmentPath = IoHelper.GetEnvironmentPath();
             ResultingFileContent = File.ReadAllText(inputFile);
             OperatedFile = inputFile;
