@@ -18,7 +18,8 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
         {
             "",
             "Ytils JsMrg",
-            $"(c) {App.Date}, v{App.Version} by Kim Schneider"
+            $"v{App.Version} by Kim Schneider, {App.Date}",
+            $"Visit {App.Website} for documentation."
         };
 
         public static string[] InitialMessagesWLicense1 = InitialMessagesWOLicense;
