@@ -22,11 +22,11 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
             $"Visit {App.Website} for documentation."
         };
 
-        public static string[] InitialMessagesWLicense1 = InitialMessagesWOLicense;
+        public static readonly string[] InitialMessagesWLicense1 = InitialMessagesWOLicense;
 
-        public static string[] InitialMessagesWLicense2 = new string[]
+        public static readonly string[] InitialMessagesWLicense2 = new string[]
         {
-            "Licensed under MIT, see: https://jsmrg.ytils.com/license"
+            "Licensed under MIT, see: https://www.ytils.com/jsmrg/license"
         };
         
         public static readonly string[] Help = new string[]
@@ -34,7 +34,7 @@ namespace application.jsmrg.ytils.com.Lib.Terminal
             "",
             "Usage: jsmrg <input-file> <output-file>",
             "Enter jsmrg --help to open this dialogue.",
-            "Visit https://jsmrg.ytils.com/documentation for a full documentation.",
+            $"Visit {App.FullDocumentationUri} for a full documentation.",
             "",
         };
 
